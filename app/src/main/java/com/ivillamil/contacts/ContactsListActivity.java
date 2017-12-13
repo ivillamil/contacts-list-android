@@ -41,26 +41,6 @@ public class ContactsListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.add_item:
-                Log.i("Menu", "Add item");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
     private List<String> getContacts() {
         String url = "https://gist.githubusercontent.com/ivillamil/e10ca31afcd136a5a7c7/raw/240a27e8c34b5bec7edfa19ee42efad909a85401/demo-users-db.json";
         return new ArrayList<String>() {{
