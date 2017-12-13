@@ -4,7 +4,8 @@ package com.ivillamil.contacts;
  * Created by ivillamil on 12/12/17.
  */
 
-public class ContactModel {
+public class Contact {
+
     public int id;
     public String avatar;
     public String address;
@@ -14,9 +15,15 @@ public class ContactModel {
     public String phone;
     public String title;
 
-    public ContactModel() {}
+    public Contact() {}
 
-    public ContactModel(int id, String avatar, String address, String description, String email, String name, String phone, String title) {
+    public Contact(int id, String name, String title) {
+        this.id = id;
+        this.name = name;
+        this.title = title;
+    }
+
+    public Contact(int id, String avatar, String address, String description, String email, String name, String phone, String title) {
         this.id = id;
         this.avatar = avatar;
         this.address = address;

@@ -1,10 +1,14 @@
 package com.ivillamil.contacts;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -13,11 +17,11 @@ import java.util.List;
  */
 
 class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
-    private List<String> contacts;
+    private List<Contact> contacts;
     private int layout;
     private OnItemClickListener itemClickListener;
 
-    ContactsListAdapter(List<String> contacts, int layout, OnItemClickListener listener) {
+    ContactsListAdapter(List<Contact> contacts, int layout, OnItemClickListener listener) {
         this.contacts = contacts;
         this.layout = layout;
         this.itemClickListener = listener;
@@ -40,19 +44,31 @@ class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.Conta
         return contacts.size();
     }
 
+    void update(List<Contact> contacts) {
+        this.contacts.clear();
+        this.contacts = contacts;
+        this.notifyDataSetChanged();
+    }
+
     static class ContactViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
         private TextView titleTextView;
+        private SimpleDraweeView contactImage;
 
         ContactViewHolder(View itemView) {
             super(itemView);
             this.nameTextView = itemView.findViewById(R.id.contactName);
             this.titleTextView = itemView.findViewById(R.id.contactTitle);
+            this.contactImage = itemView.findViewById(R.id.contactImage);
         }
 
-        void bind(final String contact, final OnItemClickListener listener) {
-            nameTextView.setText(contact);
-            titleTextView.setText(contact);
+        void bind(final Contact contact, final OnItemClickListener listener) {
+            nameTextView.setText(contact.getName());
+            titleTextView.setText(contact.getTitle());
+
+            Uri uri = Uri.parse(contact.getAvatar());
+            contactImage.setImageURI(uri);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,6 +80,6 @@ class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.Conta
     }
 
     interface OnItemClickListener {
-        void onItemClick(String contact, int position);
+        void onItemClick(Contact contact, int position);
     }
 }
