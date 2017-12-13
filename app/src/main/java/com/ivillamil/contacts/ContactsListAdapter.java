@@ -1,10 +1,9 @@
 package com.ivillamil.contacts;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,56 +12,58 @@ import java.util.List;
  * Created by ivillamil on 12/12/17.
  */
 
-public class ContactsListAdapter extends BaseAdapter {
-
-    private Context context;
-    private int layout;
+class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapter.ContactViewHolder> {
     private List<String> contacts;
+    private int layout;
+    private OnItemClickListener itemClickListener;
 
-    public ContactsListAdapter(Context context, int layout, List<String> contacts) {
-        this.context = context;
-        this.layout = layout;
+    ContactsListAdapter(List<String> contacts, int layout, OnItemClickListener listener) {
         this.contacts = contacts;
+        this.layout = layout;
+        this.itemClickListener = listener;
+    }
+
+
+    @Override
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        return new ContactViewHolder(v);
     }
 
     @Override
-    public int getCount() {
-        return this.contacts.size();
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
+        holder.bind(contacts.get(position), itemClickListener);
     }
 
     @Override
-    public Object getItem(int position) {
-        return this.contacts.get(position);
+    public int getItemCount() {
+        return contacts.size();
     }
 
-    @Override
-    public long getItemId(int id) {
-        return id;
-    }
+    static class ContactViewHolder extends RecyclerView.ViewHolder {
+        private TextView nameTextView;
+        private TextView titleTextView;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ContactViewHolder holder;
-
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(this.context);
-            convertView = inflater.inflate(this.layout, null);
-            holder = new ContactViewHolder();
-            holder.nameTextView = convertView.findViewById(R.id.contactName);
-            convertView.setTag(holder);
-        } else {
-            holder = (ContactViewHolder) convertView.getTag();
+        ContactViewHolder(View itemView) {
+            super(itemView);
+            this.nameTextView = itemView.findViewById(R.id.contactName);
+            this.titleTextView = itemView.findViewById(R.id.contactTitle);
         }
 
+        void bind(final String contact, final OnItemClickListener listener) {
+            nameTextView.setText(contact);
+            titleTextView.setText(contact);
 
-        String contact = contacts.get(position);
-        holder.nameTextView.setText(contact);
-
-        return convertView;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(contact, getAdapterPosition());
+                }
+            });
+        }
     }
 
-    static class ContactViewHolder {
-        private TextView nameTextView;
-
+    interface OnItemClickListener {
+        void onItemClick(String contact, int position);
     }
 }

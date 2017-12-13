@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Contacts</string>
+    <string name="app_label">Contacts Android</string>
     <string name="line_separator">Line for separating text</string>
 </resources>
