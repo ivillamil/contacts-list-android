@@ -2,4 +2,7 @@
     <string name="app_name">Contacts</string>
     <string name="app_label">Contacts Android</string>
     <string name="line_separator">Line for separating text</string>
+    <string name="address_label">Address:</string>
+    <string name="email_label">Email:</string>
+    <string name="phone_label">Phone:</string>
 </resources>

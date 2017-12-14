@@ -1,13 +1,10 @@
 package com.ivillamil.contacts;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,16 @@ public class ContactsListActivity extends AppCompatActivity {
         adapter = new ContactsListAdapter(contacts, R.layout.contact_item, new ContactsListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contact contact, int position) {
-                Toast.makeText(ContactsListActivity.this, "Clicked: " + contact.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ContactsListActivity.this, ContactDetailsActivity.class);
+                intent.putExtra("id", contact.getId());
+                intent.putExtra("address", contact.getAddress());
+                intent.putExtra("avatar", contact.getAvatar());
+                intent.putExtra("description", contact.getDescription());
+                intent.putExtra("email", contact.getEmail());
+                intent.putExtra("name", contact.getName());
+                intent.putExtra("phone", contact.getPhone());
+                intent.putExtra("title", contact.getTitle());
+                startActivity(intent);
             }
         });
 

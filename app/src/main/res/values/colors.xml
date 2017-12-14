@@ -5,7 +5,7 @@
     <color name="purpleDarker">#1E162D</color>
     <color name="purpleLight">#5B4A78</color>
     <color name="purpleLighter">#D2BBFA</color>
-    <color name="text">#FFFFFF</color>
+    <color name="text">#ffffff</color>
     <color name="textLight">#655A75</color>
     <color name="colorAccent">#FF4081</color>
 </resources>
